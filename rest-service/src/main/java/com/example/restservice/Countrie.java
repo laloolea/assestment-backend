@@ -1,13 +1,13 @@
 package com.example.restservice;
 
-public class Countries {
-    private long id;
+public class Countrie {
+    private int id;
     private String name;
     private String capital;
     private String population;
 
-
-    public Countries(long _id, String _name, String _capital, String _population) {
+    public Countrie(){}
+    public Countrie(int _id, String _name, String _capital, String _population) {
         this.id = _id;
         this.name = _name;
         this.capital = _capital;
@@ -15,7 +15,7 @@ public class Countries {
 
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -43,8 +43,11 @@ public class Countries {
         this.name = name;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
+
+    
+
 
 }
