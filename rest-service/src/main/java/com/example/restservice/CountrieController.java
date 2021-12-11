@@ -33,8 +33,8 @@ public class CountrieController {
         return countriesService.getAllCountries();
     }
     @GetMapping ("/countries/{pId}")
-    public Countrie getCountrie(@PathVariable("pId") int id){
-        return countriesService.getCountrie(id);
+    public Countrie getCountrie(@PathVariable("pId") Long id){
+        return countriesService.getCountrie(id).orElseThrow(()-> new CountrieNotFoundException(id));
     }
 
     @PostMapping("/countries")
@@ -43,11 +43,11 @@ public class CountrieController {
     }
 
     @PutMapping("/countries/{pId}")
-    public void updateCountrie(@RequestBody Countrie countrie,@PathVariable("pId") int id){
+    public void updateCountrie(@RequestBody Countrie countrie,@PathVariable("pId") Long id){
         countriesService.updateCountrie(id,countrie);
     }
     @DeleteMapping("/countries/{pId}")
-    public void deleteCountrie(@PathVariable("pId")int id){
+    public void deleteCountrie(@PathVariable("pId")Long id){
         countriesService.deleteCountrie(id);
     }
 }

@@ -1,41 +1,40 @@
 package com.example.restservice;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CountriesService {
 
-    private List <Countrie> countries = new ArrayList<>(Arrays.asList(
-            new Countrie(0,"Mexico","Ciudad de Mexico","128900000"),
-            new Countrie(1,"Canada","Ottawa","128993333"),
-            new Countrie(2,"Argentina","Buenos Aires","11221212"),
-            new Countrie(3,"Espana","Madrid","13900000")));
+    @Autowired
+    private CountrieRepository countrieRepository;
+
 
     public List<Countrie> getAllCountries(){
+        List<Countrie> countries = new ArrayList<>();
+        countrieRepository.findAll().forEach(countries::add);
         return countries;
     }
-    public Countrie getCountrie(int id){
-        return countries.stream().filter(p -> p.getId()==id).findFirst().get();
+
+
+    public Optional<Countrie> getCountrie(Long id){
+        return countrieRepository.findById(id);
     }
 
     public void addCountrie(Countrie countrie){
-        countries.add(countrie);
+        countrieRepository.save(countrie);
     }
 
-    public void updateCountrie(int id, Countrie countrie){
-        for(int i = 0 ; i < countries.size();i++){
-            Countrie c = countries.get(i);
-            if(c.getId() == (id)){
-                countries.set(i,countrie);
-                return;
-            }
+    public void updateCountrie(Long id, Countrie countrie){
+        if(countrieRepository.findById(id).get()!= null){
+            countrieRepository.save(countrie);
         }
     }
 
-    public void deleteCountrie(int id){
-        countries.removeIf(p-> p.getId()==id);
+    public void deleteCountrie(Long id){
+        countrieRepository.deleteById(id);
     }
 }
